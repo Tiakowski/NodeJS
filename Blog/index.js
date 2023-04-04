@@ -37,7 +37,8 @@ app.get("/", (req, res) => {
     Article.findAll({
         order: [
             ['id','DESC']
-        ]
+        ],
+        limit: 4
     }).then(articles => {
 
         Category.findAll().then( categories => {
@@ -64,6 +65,28 @@ app.get("/:slug",(req, res) => {
     }).catch(err => {
         res.redirect("/")
     })
+});
+
+app.get("/category/:slug", (req,res) => {
+    var slug = req.params.slug;
+    Category.findOne({
+        where: {
+            slug: slug
+        },
+        include: [{model:Article}]
+    }).then( category => {
+        if(category != undefined) {
+            Category.findAll().then(categories => {
+                res.render("index", {articles: category.articles, categories: categories})
+            });
+
+        } else {
+            res.redirect("/");
+        }
+    }).catch ( err => {
+        res.redirect("/");
+    })
+
 });
 
 app.listen(8080, () => {
