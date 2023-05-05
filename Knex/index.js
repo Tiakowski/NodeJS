@@ -113,7 +113,8 @@ database.select(["games.*","estudios.nome as estudio"]).table("games").innerJoin
 });
 */
 
-// Iner Join 1 para M (Com os estudios no mesmo array)
+
+// Iner Join 1 para N (Com os estudios no mesmo array)
 
 /*
 database.select(["games.*","estudios.nome as estudio"]).table("games").innerJoin("estudios","estudios.game_id","games.id").then( data => {
@@ -135,5 +136,44 @@ database.select(["games.*","estudios.nome as estudio"]).table("games").innerJoin
 }).catch(err => {
     console.log(err)
 });
+
+*/
+
+
+
+//Relaciomanento N to N
+
+/*
+database.select([
+    "estudios.nome as estudio_nome",
+    "games.nome as game_nome"
+]).table("games_estudios")
+    .innerJoin("games","games.id","games_estudios.game_id")
+    .innerJoin("estudios","estudios.id","games_estudios.estudio_id")
+    .where("games.id",4)
+    .then( data => {
+        console.log(data);
+    }).catch( err => {
+        console.log(err);
+    });
+    */
+
+
+
+// Usando transaction
+
+/*
+async function transacao(){
+    try{
+        await database.transaction(async trans => {
+            await database.insert({nome: "Annapurna"}).table("estudios");
+            await database.insert({nome: "Microsoft"}).table("estudios");
+        });
+    }catch(err){
+        console.log(err);
+    }
+}
+
+transacao();
 
 */
