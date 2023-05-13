@@ -1,6 +1,6 @@
 <template>
-    <div :class="{'cliente': !cliente.isCraque,'clienteCraque': cliente.isCraque}">
-        <H2 id="h2"> Nome: {{cliente.nome}}</H2>
+    <div :class="{'cliente': !isCraque,'clienteCraque': isCraque}">
+        <h2> Nome: {{cliente.nome}}</h2>
         <hr>
         <p>{{cliente.descricao}}</p>
         <hr>
@@ -8,6 +8,9 @@
         <p>Time: {{cliente.time}}</p>
         <p v-if="cliente.showAge == true">Idade: {{cliente.idade}}</p>
         <p v-else> Idade secreta!</p>
+        <p>Email: {{idEspecial}}</p>
+        <button @click="mudarStatus($event)">Mudar status!</button>
+        <button @click="emitirEventoDelete">Deletar</button>
     </div>
 </template>
 
@@ -15,12 +18,26 @@
 export default {
     data() {
         return {
-            
+            isCraque: false
         }
     },
     props: {
         cliente: Object
+    },
+    methods: {
+        mudarStatus: function($event){
+            console.log($event)
+        },
+        emitirEventoDelete: function(){
+            console.log("Emitindo do filho");
+            this.$emit("meDelete",{titulos: "Libertadores", component: this, id: this.cliente.numero});
+        }
+    },
+    computed: {
+    idEspecial: function(){
+      return (this.cliente.nome.trim() + this.cliente.numero + "@"+this.cliente.time+".com").replace(" ","");
     }
+  }
     
 }
 </script>
