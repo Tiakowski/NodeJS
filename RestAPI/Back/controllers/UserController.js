@@ -27,7 +27,7 @@ class UserController {
     async create(req, res){
         console.log(req.body)
         var{email, name, password} = req.body;
-        if(email == undefined){
+        if(email == undefined || email == '' || email== " "){
             res.status(400);
             res.json({error: "Email inválido", sytax:"'email': 'email@dominio.com'"});
             return;
@@ -38,7 +38,7 @@ class UserController {
 
         if(emailExists){
             res.status(406);
-            res.json({err: "O email já está cadastrado"});
+            res.json({error: "O email já está cadastrado"});
             return;
         }
         
