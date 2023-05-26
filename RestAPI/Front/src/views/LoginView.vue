@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Registro de usuário!</h1>
+        <h1>Login</h1>
         <hr>
         <div class="columns is-centered">
             <div class="column is-one-quarter">
@@ -9,14 +9,12 @@
                         {{ error }}
                     </div>
                 </div>
-                <p><strong>Nome</strong></p>
-                <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
                 <p><strong>Email</strong></p>
                 <input type="email" placeholder="email@dominio.com" class="input" v-model="email">
                 <p><strong>Senha</strong></p>
-                <input type="password" placeholder="Senha" class="input" v-model="password">
+                <input type="password" placeholder="********" class="input" v-model="password">
                 <hr>
-                <button class="button is-success" @click="register">Cadastrar</button>
+                <button class="button is-success" @click="login">Entrar</button>
 
             </div>
         </div>
@@ -30,7 +28,6 @@ import axios from 'axios';
 export default {
     data(){
         return {
-            name: '',
             password: '',
             email:'',
             error: undefined,
@@ -38,15 +35,14 @@ export default {
         
     },
     methods:{
-            register(){
-                axios.post("http://localhost:8686/user",{
-                    name: this.name,
+            login(){
+                axios.post("http://localhost:8686/login",{
                     password: this.password,
                     email: this.email
                 }).then(res => {
                     console.log(res)
+                    localStorage.setItem('token', res.data.token);
                     this.$router.push('/')
-
                 }).catch(err => {
                     var msgErro = err.response.data.error;
                     this.error = msgErro;

@@ -124,11 +124,12 @@ class UserController {
                 res.json({token: token});
             } else {
                 res.status(401);
-                res.send("Senha inválida");
+                res.json({error: "Senha incorreta"})
             }
 
         } else {
-            res.json({status: false});
+            res.status(404)
+            res.json({status: false, error: "Email inválido"})
         }
 
     }
