@@ -61,7 +61,6 @@ class User{
     async findEmail(email){
         try{
             var result = await knex.select("*").from("users").where({email: email});
-            console.log(result)
             if (result.length > 0){
                 return true;
             } else {
@@ -104,12 +103,12 @@ class User{
                 return {status: true}
             }catch(err){
                 console.log(err)
-                return {status: false, err: err}
+                return {status: false, error: err}
             }
             
 
         } else {
-            return {status: false, err:"Usuário não encontrado"}
+            return {status: false, error:"Usuário não encontrado"}
         }
     }
 

@@ -3,8 +3,8 @@ var secret = "aoqighaiugqiaph";
 
 
 module.exports = function(req, res, next){
-    const authToken = req.headers['authorization']
-
+    const authToken = req.headers['authorization'];
+    console.log(authToken);
     if(authToken != undefined){
         const bearer = authToken.split(' ');
         var token = bearer[1];
@@ -20,12 +20,12 @@ module.exports = function(req, res, next){
             }
         }catch(err){
             res.status(401);
-            res.send("Não autenticado");
+            res.send("Não autorizado!");
             return;
         }     
     } else {
         res.status(401);
-        res.send("Não autenticado");
+        res.send("Token Undefined");
         return;
     }
 }

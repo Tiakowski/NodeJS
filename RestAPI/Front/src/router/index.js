@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import UsersView from '../views/UsersView.vue'
+import EditView from '../views/EditView.vue'
+
 import axios from 'axios'
 
 
@@ -49,6 +51,12 @@ const routes = [
     path: '/login',
     name:"Login",
     component: LoginView
+  },
+  {
+    path: '/admin/users/edit/:id',
+    name:'UserEdit',
+    component: EditView,
+    beforeEnter: AdminAuth
   },
   {
     path: '/about',
